@@ -6,7 +6,7 @@ import { apiRequest } from '@/lib/queryClient';
 import { useLocation } from 'wouter';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
-import { Mail, Lock, LogIn } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function Auth() {
   const [, setLocation] = useLocation();
@@ -110,164 +110,131 @@ export default function Auth() {
           onClick={(e) => e.preventDefault()}
           onContextMenu={(e) => e.preventDefault()}
         />
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/50 via-black/60 to-black/70 z-1"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-black/60 via-black/70 to-black/80 z-1"></div>
       </div>
 
       <motion.div
-        className="relative z-10 w-full max-w-md px-4 sm:px-6"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 w-full max-w-[540px] px-4"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="w-full bg-gradient-to-br from-white/[0.08] to-white/[0.03] border border-white/20 rounded-3xl backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] p-8 sm:p-10">
-          <div className="text-center mb-8">
-            <motion.h1 
-              className="text-3xl sm:text-4xl font-extralight text-white tracking-tight mb-3"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-            >
-              Welcome Back
-            </motion.h1>
-            
-            <motion.p 
-              className="text-sm font-light text-white/50 tracking-wide"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-            >
-              Sign in to continue to ARRAY
-            </motion.p>
+        <div className="relative bg-black/40 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden">
+          {/* Header */}
+          <div className="px-6 sm:px-8 pt-6 sm:pt-7 pb-4 sm:pb-5 border-b border-white/5">
+            <h2 className="text-lg sm:text-xl font-light text-white tracking-tight">
+              Sign in to ARRAY
+            </h2>
+            <p className="text-[11px] sm:text-xs text-white/40 mt-1 font-light">
+              Enter your credentials to continue
+            </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <motion.div 
-              className="relative group"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-            >
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10">
-                <Mail className="w-4 h-4 text-white/40 transition-colors duration-300 group-focus-within:text-blue-400" />
-              </div>
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="px-6 sm:px-8 py-5 sm:py-6 space-y-3 sm:space-y-3.5">
+            <div className="space-y-1.5">
+              <label className="text-[11px] sm:text-xs text-white/50 font-light tracking-wide block">
+                Email
+              </label>
               <input
                 type="email"
-                placeholder="Email address"
+                placeholder="you@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full pl-12 pr-4 py-3.5 text-sm font-light text-white bg-white/[0.06] border border-white/20 rounded-2xl outline-none transition-all duration-300 placeholder:text-white/30 focus:border-blue-400/60 focus:shadow-[0_0_30px_rgba(96,165,250,0.2),inset_0_1px_0_rgba(255,255,255,0.15)] focus:bg-white/[0.1] backdrop-blur-xl hover:border-white/30 hover:bg-white/[0.08]"
+                className="w-full px-3 sm:px-3.5 py-2 sm:py-2.5 text-xs sm:text-sm text-white bg-white/5 border border-white/10 rounded-lg outline-none transition-all duration-200 placeholder:text-white/25 focus:border-white/30 focus:bg-white/8 hover:border-white/20"
                 data-testid="input-email"
               />
-            </motion.div>
+            </div>
 
-            <motion.div 
-              className="relative group"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-            >
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10">
-                <Lock className="w-4 h-4 text-white/40 transition-colors duration-300 group-focus-within:text-blue-400" />
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <label className="text-[11px] sm:text-xs text-white/50 font-light tracking-wide">
+                  Password
+                </label>
+                <button
+                  type="button"
+                  className="text-[11px] sm:text-xs text-white/40 hover:text-white/70 transition-colors font-light"
+                >
+                  Forgot?
+                </button>
               </div>
               <input
                 type="password"
-                placeholder="Password"
+                placeholder="••••••••"
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="w-full pl-12 pr-4 py-3.5 text-sm font-light text-white bg-white/[0.06] border border-white/20 rounded-2xl outline-none transition-all duration-300 placeholder:text-white/30 focus:border-blue-400/60 focus:shadow-[0_0_30px_rgba(96,165,250,0.2),inset_0_1px_0_rgba(255,255,255,0.15)] focus:bg-white/[0.1] backdrop-blur-xl hover:border-white/30 hover:bg-white/[0.08]"
+                className="w-full px-3 sm:px-3.5 py-2 sm:py-2.5 text-xs sm:text-sm text-white bg-white/5 border border-white/10 rounded-lg outline-none transition-all duration-200 placeholder:text-white/25 focus:border-white/30 focus:bg-white/8 hover:border-white/20"
                 data-testid="input-password"
               />
-            </motion.div>
+            </div>
 
-            <motion.div 
-              className="flex items-center justify-between text-xs pt-1"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-            >
+            <div className="flex items-center justify-center pt-2 sm:pt-3">
               <button
-                type="button"
-                onClick={() => setLocation('/about')}
-                className="text-white/50 hover:text-white transition-all duration-300 font-light hover:underline decoration-white/30 underline-offset-2"
-                data-testid="link-about"
+                type="submit"
+                className="min-w-[140px] px-6 sm:px-10 py-2 sm:py-2.5 text-[11px] sm:text-xs font-medium text-white bg-white/10 border border-white/10 rounded-lg cursor-pointer transition-all duration-200 outline-none overflow-hidden hover:bg-white/15 hover:border-white/20 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 whitespace-nowrap"
+                disabled={loginMutation.isPending}
+                data-testid="button-login"
               >
-                Create account
-              </button>
-              <button
-                type="button"
-                className="text-white/50 hover:text-white transition-all duration-300 font-light hover:underline decoration-white/30 underline-offset-2"
-              >
-                Forgot password?
-              </button>
-            </motion.div>
-
-            <motion.button
-              type="submit"
-              className="relative w-full mt-6 px-6 py-3.5 text-sm font-medium text-white bg-gradient-to-r from-blue-500/30 to-blue-600/30 border border-blue-400/30 rounded-full cursor-pointer transition-all duration-500 tracking-wide outline-none overflow-hidden group hover:border-blue-400/50 hover:shadow-[0_0_40px_rgba(96,165,250,0.3),inset_0_0_25px_rgba(96,165,250,0.15)] disabled:opacity-40 disabled:cursor-not-allowed backdrop-blur-md before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/15 before:to-transparent before:-translate-x-full before:transition-transform before:duration-700 hover:before:translate-x-full"
-              disabled={loginMutation.isPending}
-              data-testid="button-login"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.5 }}
-            >
-              <span className="relative z-10 flex items-center justify-center gap-2">
                 {loginMutation.isPending ? (
                   <>
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    Signing in...
+                    <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span>Signing in...</span>
                   </>
                 ) : (
                   <>
-                    <LogIn className="w-4 h-4" />
-                    Sign In
+                    <span>Continue</span>
+                    <ArrowRight className="w-3 h-3 flex-shrink-0" />
                   </>
                 )}
-              </span>
-            </motion.button>
+              </button>
+            </div>
           </form>
 
-          <motion.div 
-            className="relative my-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
-          >
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/15"></div>
+          {/* Divider */}
+          <div className="relative px-6 sm:px-8">
+            <div className="absolute inset-x-0 flex items-center">
+              <div className="w-full border-t border-white/5"></div>
             </div>
-            <div className="relative flex justify-center text-xs">
-              <span className="bg-gradient-to-r from-transparent via-black/60 to-transparent px-4 text-white/40 font-light tracking-wide">
-                Or continue with
+            <div className="relative flex justify-center">
+              <span className="bg-black/40 px-3 text-[9px] sm:text-[10px] text-white/30 font-light tracking-widest uppercase">
+                Or
               </span>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.button
-            type="button"
-            onClick={handleDiscordLogin}
-            className="relative flex items-center justify-center gap-2.5 w-full px-6 py-3.5 text-sm font-medium text-white bg-gradient-to-r from-[#5865F2]/25 to-[#5865F2]/25 border border-[#5865F2]/30 rounded-full cursor-pointer transition-all duration-500 tracking-wide outline-none overflow-hidden group hover:border-[#5865F2]/50 hover:shadow-[0_0_35px_rgba(88,101,242,0.3),inset_0_0_25px_rgba(88,101,242,0.15)] backdrop-blur-md before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/12 before:to-transparent before:-translate-x-full before:transition-transform before:duration-700 hover:before:translate-x-full"
-            data-testid="button-discord-login"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.5 }}
-          >
-            <span className="relative z-10 flex items-center gap-2.5">
-              <svg width="18" height="18" viewBox="0 0 71 55" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          {/* Discord button */}
+          <div className="px-6 sm:px-8 py-5 sm:py-6 pt-4 sm:pt-5 flex justify-center">
+            <button
+              type="button"
+              onClick={handleDiscordLogin}
+              className="min-w-[180px] px-5 sm:px-7 py-2 sm:py-2.5 text-[11px] sm:text-xs font-medium text-white bg-[#5865F2]/10 border border-[#5865F2]/20 rounded-lg cursor-pointer transition-all duration-200 outline-none overflow-hidden hover:bg-[#5865F2]/20 hover:border-[#5865F2]/30 flex items-center justify-center gap-2 whitespace-nowrap"
+              data-testid="button-discord-login"
+            >
+              <svg width="16" height="16" viewBox="0 0 71 55" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
                 <path d="M60.1045 4.8978C55.5792 2.8214 50.7265 1.2916 45.6527 0.41542C45.5603 0.39851 45.468 0.440769 45.4204 0.525289C44.7963 1.6353 44.105 3.0834 43.6209 4.2216C38.1637 3.4046 32.7345 3.4046 27.3892 4.2216C26.905 3.0581 26.1886 1.6353 25.5617 0.525289C25.5141 0.443589 25.4218 0.40133 25.3294 0.41542C20.2584 1.2888 15.4057 2.8186 10.8776 4.8978C10.8384 4.9147 10.8048 4.9429 10.7825 4.9795C1.57795 18.7309 -0.943561 32.1443 0.293408 45.3914C0.299005 45.4562 0.335386 45.5182 0.385761 45.5576C6.45866 50.0174 12.3413 52.7249 18.1147 54.5195C18.2071 54.5477 18.305 54.5139 18.3638 54.4378C19.7295 52.5728 20.9469 50.6063 21.9907 48.5383C22.0523 48.4172 21.9935 48.2735 21.8676 48.2256C19.9366 47.4931 18.0979 46.6 16.3292 45.5858C16.1893 45.5041 16.1781 45.304 16.3068 45.2082C16.679 44.9293 17.0513 44.6391 17.4067 44.3461C17.471 44.2926 17.5606 44.2813 17.6362 44.3151C29.2558 49.6202 41.8354 49.6202 53.3179 44.3151C53.3935 44.2785 53.4831 44.2898 53.5502 44.3433C53.9057 44.6363 54.2779 44.9293 54.6529 45.2082C54.7816 45.304 54.7732 45.5041 54.6333 45.5858C52.8646 46.6197 51.0259 47.4931 49.0921 48.2228C48.9662 48.2707 48.9102 48.4172 48.9718 48.5383C50.038 50.6034 51.2554 52.5699 52.5959 54.435C52.6519 54.5139 52.7526 54.5477 52.845 54.5195C58.6464 52.7249 64.529 50.0174 70.6019 45.5576C70.6551 45.5182 70.6887 45.459 70.6943 45.3942C72.1747 30.0791 68.2147 16.7757 60.1968 4.9823C60.1772 4.9429 60.1437 4.9147 60.1045 4.8978ZM23.7259 37.3253C20.2276 37.3253 17.3451 34.1136 17.3451 30.1693C17.3451 26.225 20.1717 23.0133 23.7259 23.0133C27.308 23.0133 30.1626 26.2532 30.1066 30.1693C30.1066 34.1136 27.28 37.3253 23.7259 37.3253ZM47.3178 37.3253C43.8196 37.3253 40.9371 34.1136 40.9371 30.1693C40.9371 26.225 43.7636 23.0133 47.3178 23.0133C50.9 23.0133 53.7545 26.2532 53.6986 30.1693C53.6986 34.1136 50.9 37.3253 47.3178 37.3253Z"/>
               </svg>
-              <span>Discord</span>
-            </span>
-          </motion.button>
+              <span>Continue with Discord</span>
+            </button>
+          </div>
 
-          <motion.p 
-            className="text-center text-xs text-white/30 mt-6 font-light"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.5 }}
-          >
-            By continuing, you agree to our Terms of Service and Privacy Policy
-          </motion.p>
+          {/* Footer */}
+          <div className="px-6 sm:px-8 pb-5 sm:pb-6 flex items-center justify-center gap-1 text-[10px] sm:text-[11px]">
+            <span className="text-white/30 font-light">Don't have an account?</span>
+            <button
+              type="button"
+              onClick={() => setLocation('/about')}
+              className="text-white/60 hover:text-white transition-colors font-light underline decoration-white/20 underline-offset-2"
+              data-testid="link-about"
+            >
+              Sign up
+            </button>
+          </div>
         </div>
+
+        {/* Terms footer */}
+        <p className="text-center text-[9px] sm:text-[10px] text-white/20 mt-3 sm:mt-4 font-light px-4">
+          By continuing, you agree to ARRAY's Terms and Privacy Policy
+        </p>
       </motion.div>
     </div>
   );

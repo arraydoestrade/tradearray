@@ -138,10 +138,10 @@ export default function Register() {
         <div className="absolute top-0 left-0 w-full h-full bg-black/70 z-1"></div>
       </div>
 
-      <div className="relative z-2 flex flex-col items-center gap-12 max-w-[600px] w-[90%] p-8">
+      <div className="relative z-2 flex flex-col items-center gap-8 sm:gap-12 max-w-[600px] w-full px-4 sm:px-8 mx-auto">
         {!showSuccess && (
           <>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center justify-center gap-3 w-full">
               {steps.map((step, index) => (
                 <motion.div
                   key={step.id}
@@ -159,7 +159,7 @@ export default function Register() {
               ))}
             </div>
 
-            <div className="w-full min-h-[350px] flex items-center justify-center">
+            <div className="w-full min-h-[300px] sm:min-h-[350px] flex items-center justify-center">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentStep}
@@ -170,10 +170,10 @@ export default function Register() {
                     duration: 0.5,
                     ease: [0.22, 1, 0.36, 1]
                   }}
-                  className="w-full flex flex-col items-center gap-6"
+                  className="w-full flex flex-col items-center gap-5 sm:gap-6"
                 >
                   <motion.h2 
-                    className="font-inter text-[clamp(1.75rem,4vw,2.5rem)] font-light text-white text-center tracking-tight m-0"
+                    className="font-inter text-2xl sm:text-3xl md:text-4xl font-light text-white text-center tracking-tight m-0 px-4"
                     data-testid="register-step-label"
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -184,13 +184,13 @@ export default function Register() {
                   
                   {currentStepData.type === 'dropdown' ? (
                     <motion.div 
-                      className="w-full max-w-[450px] relative"
+                      className="w-full max-w-[450px] mx-auto relative px-2 sm:px-0"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.2 }}
                     >
                       <select
-                        className="w-full px-5 py-3.5 font-inter text-[clamp(1rem,2.5vw,1.25rem)] font-light text-white text-center bg-white/5 border border-white/15 rounded-xl outline-none transition-all duration-300 focus:border-blue-400/50 focus:shadow-[0_0_24px_rgba(96,165,250,0.15),inset_0_1px_0_rgba(255,255,255,0.1)] focus:bg-white/8 backdrop-blur-xl appearance-none cursor-pointer bg-[url('data:image/svg+xml,%3Csvg%20width=%2712%27%20height=%278%27%20viewBox=%270%200%2012%208%27%20fill=%27none%27%20xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cpath%20d=%27M1%201L6%206L11%201%27%20stroke=%27rgba(255,255,255,0.6)%27%20stroke-width=%272%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27/%3E%3C/svg%3E')] bg-no-repeat bg-[right_1.25rem_center] pr-12 hover:border-white/25 hover:bg-white/10"
+                        className="w-full px-4 sm:px-5 py-3 sm:py-3.5 font-inter text-sm sm:text-base md:text-lg font-light text-white text-center bg-white/5 border border-white/15 rounded-xl outline-none transition-all duration-300 focus:border-blue-400/50 focus:shadow-[0_0_24px_rgba(96,165,250,0.15),inset_0_1px_0_rgba(255,255,255,0.1)] focus:bg-white/8 backdrop-blur-xl appearance-none cursor-pointer bg-[url('data:image/svg+xml,%3Csvg%20width=%2712%27%20height=%278%27%20viewBox=%270%200%2012%208%27%20fill=%27none%27%20xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cpath%20d=%27M1%201L6%206L11%201%27%20stroke=%27rgba(255,255,255,0.6)%27%20stroke-width=%272%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27/%3E%3C/svg%3E')] bg-no-repeat bg-[right_1rem_center] sm:bg-[right_1.25rem_center] pr-10 sm:pr-12 hover:border-white/25 hover:bg-white/10"
                         data-testid="input-knownAs"
                         value={currentValue as string}
                         onChange={(e) => handleChange(e.target.value)}
@@ -206,7 +206,7 @@ export default function Register() {
                     </motion.div>
                   ) : (
                     <motion.input
-                      className="w-full max-w-[450px] px-5 py-3.5 font-inter text-[clamp(1rem,2.5vw,1.25rem)] font-light text-white text-center bg-white/5 border border-white/15 rounded-xl outline-none transition-all duration-300 placeholder:text-white/35 focus:border-blue-400/50 focus:shadow-[0_0_24px_rgba(96,165,250,0.15),inset_0_1px_0_rgba(255,255,255,0.1)] focus:bg-white/8 backdrop-blur-xl hover:border-white/25 hover:bg-white/10"
+                      className="w-full max-w-[450px] mx-auto px-4 sm:px-5 py-3 sm:py-3.5 font-inter text-sm sm:text-base md:text-lg font-light text-white text-center bg-white/5 border border-white/15 rounded-xl outline-none transition-all duration-300 placeholder:text-white/35 focus:border-blue-400/50 focus:shadow-[0_0_24px_rgba(96,165,250,0.15),inset_0_1px_0_rgba(255,255,255,0.1)] focus:bg-white/8 backdrop-blur-xl hover:border-white/25 hover:bg-white/10"
                       data-testid={`input-${currentStepData.id}`}
                       type={currentStepData.type}
                       placeholder={currentStepData.placeholder}
@@ -221,7 +221,7 @@ export default function Register() {
                   )}
 
                   <motion.button
-                    className="relative w-full max-w-[450px] px-6 py-2.5 font-inter text-xs font-medium text-white bg-gradient-to-r from-blue-500/20 to-blue-600/20 border border-blue-400/20 rounded-full cursor-pointer transition-all duration-500 tracking-widest outline-none overflow-hidden group hover:border-blue-400/40 hover:shadow-[0_0_30px_rgba(96,165,250,0.2),inset_0_0_20px_rgba(96,165,250,0.1)] disabled:opacity-40 disabled:cursor-not-allowed backdrop-blur-md before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent before:-translate-x-full before:transition-transform before:duration-700 hover:before:translate-x-full"
+                    className="relative w-full max-w-[450px] mx-auto px-6 py-2.5 font-inter text-[10px] sm:text-xs font-medium text-white bg-gradient-to-r from-blue-500/20 to-blue-600/20 border border-blue-400/20 rounded-full cursor-pointer transition-all duration-500 tracking-widest outline-none overflow-hidden group hover:border-blue-400/40 hover:shadow-[0_0_30px_rgba(96,165,250,0.2),inset_0_0_20px_rgba(96,165,250,0.1)] disabled:opacity-40 disabled:cursor-not-allowed backdrop-blur-md before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent before:-translate-x-full before:transition-transform before:duration-700 hover:before:translate-x-full"
                     data-testid="button-next"
                     onClick={handleNext}
                     disabled={registerMutation.isPending}
