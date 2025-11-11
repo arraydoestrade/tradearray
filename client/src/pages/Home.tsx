@@ -32,8 +32,52 @@ export default function Home() {
       }
     };
 
+    // Force video to play - CRITICAL for mobile devices
+    const forcePlay = () => {
+      if (video.paused) {
+        video.play().catch(() => {
+          // Retry after a short delay
+          setTimeout(() => {
+            video.play().catch(() => {
+              // Final retry
+              setTimeout(() => video.play().catch(() => {}), 500);
+            });
+          }, 100);
+        });
+      }
+    };
+
+    // Attempt to play immediately
+    forcePlay();
+
+    // Retry play every 500ms for the first 3 seconds to ensure it starts
+    const playInterval = setInterval(forcePlay, 500);
+    setTimeout(() => clearInterval(playInterval), 3000);
+
+    // Force play on any user interaction
+    const handleInteraction = () => {
+      forcePlay();
+    };
+
+    // Force play when page becomes visible
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        forcePlay();
+      }
+    };
+
     video.addEventListener('timeupdate', handleTimeUpdate);
-    return () => video.removeEventListener('timeupdate', handleTimeUpdate);
+    document.addEventListener('touchstart', handleInteraction, { once: true });
+    document.addEventListener('click', handleInteraction, { once: true });
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      document.removeEventListener('touchstart', handleInteraction);
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      clearInterval(playInterval);
+    };
   }, []);
 
   return (
@@ -53,6 +97,7 @@ export default function Home() {
           x5-video-player-fullscreen="true"
           disablePictureInPicture
           controlsList="nodownload nofullscreen noremoteplayback"
+          controls={false}
           data-testid="video-background"
           style={{
             position: 'absolute',
@@ -67,9 +112,24 @@ export default function Home() {
           }}
           onLoadedMetadata={(e) => {
             const video = e.currentTarget;
+            // Remove any controls that might appear
+            video.removeAttribute('controls');
+            // Force play multiple times
             video.play().catch(() => {
-              setTimeout(() => video.play().catch(() => {}), 100);
+              setTimeout(() => {
+                video.play().catch(() => {
+                  setTimeout(() => video.play().catch(() => {}), 200);
+                });
+              }, 100);
             });
+          }}
+          onLoadedData={(e) => {
+            const video = e.currentTarget;
+            video.play().catch(() => {});
+          }}
+          onCanPlay={(e) => {
+            const video = e.currentTarget;
+            video.play().catch(() => {});
           }}
           onClick={(e) => e.preventDefault()}
           onContextMenu={(e) => e.preventDefault()}
