@@ -6,9 +6,19 @@ import BlotterText from '@/components/BlotterText';
 export default function Home() {
   const [isCamActive, setIsCamActive] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const { geoData } = useGeolocation();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [, setLocation] = useLocation();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -81,7 +91,9 @@ export default function Home() {
   }, []);
 
   return (
-    <section className="section-container">
+    <section className="section-container" style={{
+      zoom: isMobile ? '0.85' : '1'
+    }}>
       <div className="fullscreen-media-container video overlay">
         <video 
           ref={videoRef}
