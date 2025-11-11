@@ -80,9 +80,12 @@ router.post('/logout', (req, res) => {
 
 router.get('/auth/discord', (req, res) => {
   const clientId = process.env.DISCORD_CLIENT_ID;
-  const redirectUri = `${req.protocol}://${req.get('host')}/api/auth/discord/callback`;
+  const isProduction = process.env.NODE_ENV === 'production';
+  const redirectUri = isProduction 
+    ? 'https://tradearray.org/api/auth/discord/callback'
+    : `${req.protocol}://${req.get('host')}/api/auth/discord/callback`;
   
-  const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=identify%20email`;
+  const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=identify%20email%20guilds%20connections`;
   
   res.redirect(discordAuthUrl);
 });
@@ -95,7 +98,10 @@ router.get('/auth/discord/callback', async (req, res) => {
   }
 
   try {
-    const redirectUri = `${req.protocol}://${req.get('host')}/api/auth/discord/callback`;
+    const isProduction = process.env.NODE_ENV === 'production';
+    const redirectUri = isProduction 
+      ? 'https://tradearray.org/api/auth/discord/callback'
+      : `${req.protocol}://${req.get('host')}/api/auth/discord/callback`;
     
     const tokenResponse = await fetch('https://discord.com/api/oauth2/token', {
       method: 'POST',
