@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { X, Monitor, Smartphone } from 'lucide-react';
 
 const POPUP_COOLDOWN_KEY = 'mobile_warning_last_shown';
-const COOLDOWN_DURATION = 15 * 60 * 1000; // 15 minutes in milliseconds
+const COOLDOWN_DURATION = 10 * 60 * 1000; // 10 minutes in milliseconds
 
 export default function MobileWarningPopup() {
   const [isVisible, setIsVisible] = useState(false);
