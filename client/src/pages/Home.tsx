@@ -260,7 +260,7 @@ export default function Home() {
                     </button>
                     <button
                       onClick={() => {
-                        window.open('http://discord.tradearray.org', '_blank');
+                        window.open('http://discord.gg/jm4thHfnCF', '_blank');
                         setMenuOpen(false);
                       }}
                       style={{
@@ -305,7 +305,7 @@ export default function Home() {
           
           <button 
             className="button-cam-element switch fixed top-4 right-4 md:top-auto md:bottom-4 md:right-4 z-50"
-            onClick={() => window.open('http://discord.tradearray.org', '_blank')}
+            onClick={() => window.open('http://discord.gg/jm4thHfnCF', '_blank')}
             data-testid="button-discord"
           >
             <span className="icon">

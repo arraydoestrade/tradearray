@@ -165,7 +165,7 @@ export default function Me() {
                 </motion.div>
 
                 <motion.a
-                  href="https://discord.gg/yourserver"
+                  href="http://discord.gg/jm4thHfnCF"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-6 py-3 font-inter text-sm font-semibold text-white bg-[#5865F2]/85 border border-[#5865F2]/30 rounded-xl cursor-pointer transition-all duration-300 uppercase tracking-wider outline-none hover:bg-[#5865F2]/95 hover:shadow-[0_0_24px_rgba(88,101,242,0.3),0_4px_16px_rgba(88,101,242,0.2)] hover:-translate-y-0.5 active:translate-y-0 active:shadow-[0_0_16px_rgba(88,101,242,0.25)] backdrop-blur-sm"
