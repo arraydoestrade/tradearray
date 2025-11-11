@@ -242,7 +242,7 @@ export default function About() {
           </ScrollReveal>
 
           <ScrollReveal variant="fadeRight" delay={200} duration={1200}>
-            <CurvedCard title="Unheared Insights">
+            <CurvedCard title="Unique Insights">
               <p>What's coming has not even sense, we are working into a game changer for trading & investing communities around the world</p>
               <p>Everything you could've ever hoped for will be at the palm of your hands, you wont need to go anywhere else, this will be now your trading hub</p>
               <p>Multiple collaborations and implementations to come, making this a powerful environment for you and whoever you bring to this space.</p>
