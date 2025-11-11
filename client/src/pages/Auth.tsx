@@ -29,6 +29,51 @@ export default function Auth() {
 
       setTimeout(() => clearInterval(playAttempt), 3000);
     });
+
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get('error');
+    
+    if (error) {
+      const errorMessages: Record<string, { title: string; description: string }> = {
+        no_code: {
+          title: 'Error de Discord',
+          description: 'No se recibió código de autorización de Discord'
+        },
+        token_failed: {
+          title: 'Error de Discord',
+          description: 'No se pudo obtener el token de acceso de Discord'
+        },
+        invalid_discord_data: {
+          title: 'Error de Discord',
+          description: 'Datos de Discord inválidos o incompletos'
+        },
+        email_required: {
+          title: 'Email requerido',
+          description: 'Tu cuenta de Discord debe tener un email verificado'
+        },
+        no_account: {
+          title: 'Cuenta no encontrada',
+          description: 'No existe una cuenta con ese email. Por favor regístrate primero.'
+        },
+        oauth_failed: {
+          title: 'Error de autenticación',
+          description: 'Hubo un problema con la autenticación de Discord'
+        }
+      };
+
+      const errorData = errorMessages[error] || {
+        title: 'Error',
+        description: 'Ocurrió un error durante la autenticación'
+      };
+
+      toast({
+        title: errorData.title,
+        description: errorData.description,
+        variant: 'destructive',
+      });
+
+      window.history.replaceState({}, '', '/auth');
+    }
   }, []);
 
   const loginMutation = useMutation({

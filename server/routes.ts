@@ -152,13 +152,13 @@ router.get('/auth/discord/callback', async (req, res) => {
         return res.redirect('/auth?error=email_required');
       }
 
-      const existingUser = await storage.getUserByEmail(discordUser.email);
+      let user = await storage.getUserByEmail(discordUser.email);
       
-      if (existingUser) {
-        req.session.userId = existingUser.id;
+      if (user) {
+        req.session.userId = user.id;
         
-        if (!existingUser.discordId) {
-          await storage.linkDiscord(existingUser.id, {
+        if (!user.discordId) {
+          await storage.linkDiscord(user.id, {
             discordId: discordUser.id,
             discordUsername: discordUser.username,
             discordAvatar: avatarUrl,
@@ -167,7 +167,28 @@ router.get('/auth/discord/callback', async (req, res) => {
         
         return res.redirect('/me?login=true');
       } else {
-        return res.redirect('/auth?error=no_account');
+        const newUser = await storage.createUser({
+          username: discordUser.username,
+          email: discordUser.email,
+          password: Math.random().toString(36).slice(-12),
+          knownAs: 'Other',
+        });
+        
+        await storage.linkDiscord(newUser.id, {
+          discordId: discordUser.id,
+          discordUsername: discordUser.username,
+          discordAvatar: avatarUrl,
+        });
+        
+        req.session.userId = newUser.id;
+        
+        try {
+          await sendWhitelistRegistration(newUser.username);
+        } catch (error) {
+          console.error('Failed to send Discord notification:', error);
+        }
+        
+        return res.redirect('/me?registered=true');
       }
     }
   } catch (error) {
