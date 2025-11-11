@@ -3,6 +3,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import Header from './components/Header';
+import MobileWarningPopup from './components/MobileWarningPopup';
 import Home from './pages/Home';
 import About from './pages/About';
 import Auth from './pages/Auth';
@@ -15,6 +16,7 @@ import './fancy-cards.css';
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <MobileWarningPopup />
       <div className="app-container">
         <Header />
         <Switch>
