@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { X, Monitor, Smartphone } from 'lucide-react';
 
+const POPUP_COOLDOWN_KEY = 'mobile_warning_last_shown';
+const COOLDOWN_DURATION = 15 * 60 * 1000; // 15 minutes in milliseconds
+
 export default function MobileWarningPopup() {
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -11,7 +14,25 @@ export default function MobileWarningPopup() {
     const checkMobile = () => {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      setIsVisible(mobile);
+      
+      if (mobile) {
+        // Check if popup was shown recently
+        const lastShown = localStorage.getItem(POPUP_COOLDOWN_KEY);
+        const now = Date.now();
+        
+        if (lastShown) {
+          const timeSinceLastShown = now - parseInt(lastShown, 10);
+          if (timeSinceLastShown < COOLDOWN_DURATION) {
+            // Don't show popup, still in cooldown period
+            setIsVisible(false);
+            return;
+          }
+        }
+        
+        // Show popup and record the time
+        setIsVisible(true);
+        localStorage.setItem(POPUP_COOLDOWN_KEY, now.toString());
+      }
     };
 
     checkMobile();
@@ -95,7 +116,7 @@ export default function MobileWarningPopup() {
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute top-3 right-3 p-1.5 rounded-full hover-elevate active-elevate-2 transition-colors"
+          className="absolute top-3 right-3 w-8 h-8 rounded-full hover-elevate active-elevate-2 transition-colors flex items-center justify-center"
           style={{
             background: 'rgba(255, 255, 255, 0.15)',
             backdropFilter: 'blur(10px)'
